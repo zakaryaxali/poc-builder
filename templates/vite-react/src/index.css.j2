@@ -1,0 +1,167 @@
+:root {
+  /* Primary Colors */
+  --color-primary: {{ colors.primary }};
+  --color-primary-hover: {{ colors.primary_hover }};
+  --color-primary-light: {{ colors.primary_light }};
+  --color-primary-dark: {{ colors.primary_dark }};
+
+  /* Secondary Colors */
+  --color-secondary: {{ colors.secondary }};
+  --color-secondary-hover: {{ colors.secondary_hover }};
+
+  /* Neutral Colors */
+  --color-background: {{ colors.background }};
+  --color-surface: {{ colors.surface }};
+  --color-border: {{ colors.border }};
+  --color-divider: {{ colors.divider }};
+
+  /* Text Colors */
+  --color-text-heading: {{ colors.text_heading }};
+  --color-text-body: {{ colors.text_body }};
+  --color-text-muted: {{ colors.text_muted }};
+  --color-text-disabled: {{ colors.text_disabled }};
+
+  /* Semantic Colors */
+  --color-success: {{ colors.success }};
+  --color-error: {{ colors.error }};
+  --color-warning: {{ colors.warning }};
+  --color-info: {{ colors.info }};
+
+  /* Font Families */
+  --font-family-heading: {{ typography.font_family_heading }};
+  --font-family-body: {{ typography.font_family_body }};
+  --font-family-mono: {{ typography.font_family_mono }};
+
+  /* Heading Font Sizes */
+  --font-size-h1: {{ typography.font_size_h1 }};
+  --font-size-h2: {{ typography.font_size_h2 }};
+  --font-size-h3: {{ typography.font_size_h3 }};
+  --font-size-h4: {{ typography.font_size_h4 }};
+  --font-size-h5: {{ typography.font_size_h5 }};
+  --font-size-h6: {{ typography.font_size_h6 }};
+
+  /* Body Font Sizes */
+  --font-size-body-large: {{ typography.font_size_body_large }};
+  --font-size-body: {{ typography.font_size_body }};
+  --font-size-body-small: {{ typography.font_size_body_small }};
+  --font-size-caption: {{ typography.font_size_caption }};
+
+  /* Font Weights */
+  --font-weight-light: {{ typography.font_weight_light }};
+  --font-weight-regular: {{ typography.font_weight_regular }};
+  --font-weight-medium: {{ typography.font_weight_medium }};
+  --font-weight-semibold: {{ typography.font_weight_semibold }};
+  --font-weight-bold: {{ typography.font_weight_bold }};
+
+  /* Line Heights */
+  --line-height-tight: {{ typography.line_height_tight }};
+  --line-height-normal: {{ typography.line_height_normal }};
+  --line-height-relaxed: {{ typography.line_height_relaxed }};
+
+  /* Letter Spacing */
+  --letter-spacing-tight: {{ typography.letter_spacing_tight }};
+  --letter-spacing-normal: {{ typography.letter_spacing_normal }};
+  --letter-spacing-wide: {{ typography.letter_spacing_wide }};
+
+  /* Spacing Scale */
+  --spacing-xs: {{ spacing.xs }};
+  --spacing-sm: {{ spacing.sm }};
+  --spacing-md: {{ spacing.md }};
+  --spacing-lg: {{ spacing.lg }};
+  --spacing-xl: {{ spacing.xl }};
+  --spacing-xxl: {{ spacing.xxl }};
+  --spacing-xxxl: {{ spacing.xxxl }};
+
+  /* Border Widths */
+  --border-width-thin: {{ border_width.thin }};
+  --border-width-medium: {{ border_width.medium }};
+  --border-width-thick: {{ border_width.thick }};
+
+  /* Border Radius */
+  --radius-none: {{ border_radius.none }};
+  --radius-sm: {{ border_radius.sm }};
+  --radius-md: {{ border_radius.md }};
+  --radius-lg: {{ border_radius.lg }};
+  --radius-xl: {{ border_radius.xl }};
+  --radius-full: {{ border_radius.full }};
+
+  /* Shadows */
+  --shadow-none: {{ shadows.none }};
+  --shadow-sm: {{ shadows.sm }};
+  --shadow-md: {{ shadows.md }};
+  --shadow-lg: {{ shadows.lg }};
+  --shadow-xl: {{ shadows.xl }};
+
+  /* Animation */
+  --duration-fast: {{ animation.duration_fast }};
+  --duration-normal: {{ animation.duration_normal }};
+  --easing: {{ animation.easing }};
+
+  /* Layout */
+  --max-width: {{ layout.max_width }};
+  --section-padding-vertical: {{ layout.section_padding_vertical }};
+  --section-padding-horizontal: {{ layout.section_padding_horizontal }};
+  --grid-gap: {{ layout.grid_gap }};
+
+  /* Breakpoints (for use in JS) */
+  --breakpoint-sm: {{ breakpoints.sm }};
+  --breakpoint-md: {{ breakpoints.md }};
+  --breakpoint-lg: {{ breakpoints.lg }};
+  --breakpoint-xl: {{ breakpoints.xl }};
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-body);
+  background-color: var(--color-background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-heading);
+  color: var(--color-text-heading);
+  line-height: var(--line-height-tight);
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-semibold);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-semibold);
+}
+
+h5 {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-medium);
+}
+
+h6 {
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-medium);
+}
+
+#root {
+  min-height: 100vh;
+}
