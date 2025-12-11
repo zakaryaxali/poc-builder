@@ -53,7 +53,7 @@ class RequirementsParser:
         Raises:
             ValueError: If parsing fails or LLM returns invalid response
         """
-        system_prompt = """You are a React application architect following Quantum Design System principles. Parse user requirements into a structured component specification with proper visual hierarchy.
+        system_prompt = """You are a React application architect following Quantum Design System principles (Thales Design System). Parse user requirements into a structured component specification with proper visual hierarchy.
 
 Analyze the requirements and break them down into React components. For each component, identify:
 - Name (PascalCase, descriptive)
@@ -67,8 +67,17 @@ Think about VISUAL HIERARCHY:
 - Use card-based layouts for grouping (lists of items, sections, panels)
 - Identify status indicators that need semantic color badges (pending, approved, error, warning)
 - Identify data that should be displayed in lists vs. grids vs. tables
-- Plan for proper spacing between sections
+- Plan for proper spacing between sections (4px baseline grid: xs=4px, sm=8px, md=16px, lg=24px, xl=32px)
 - Consider alert/notification areas
+
+Think about FORM DESIGN (CRITICAL - Thales Design System):
+⚠️ FORMS MUST BE SINGLE-COLUMN LAYOUTS ⚠️
+- When planning forms, ALWAYS design for vertical stacking of fields
+- NEVER plan for side-by-side form fields (no multi-column layouts)
+- Plan for var(--spacing-md) between individual form fields (16px)
+- Plan for var(--spacing-lg) between form sections (24px)
+- This ensures mobile-first design and better readability
+- Forms should flow vertically with clear visual rhythm
 
 Think about ARCHITECTURE:
 - Component composition and reusability
