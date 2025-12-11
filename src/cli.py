@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 
 import click
+from dotenv import load_dotenv
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
@@ -12,6 +13,9 @@ from src.generator.component_generator import ComponentGenerator
 from src.generator.parser import RequirementsParser
 from src.generator.scaffold import ProjectScaffolder
 from src.llm.claude import ClaudeClient
+
+# Load environment variables from .env file
+load_dotenv()
 
 console = Console()
 
