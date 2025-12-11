@@ -147,14 +147,46 @@ When processing user feedback:
 ```
 poc-builder/
 ├── src/
-│   ├── llm/              # LLM provider abstractions
-│   ├── agents/           # CrewAI/LangChain agents
-│   ├── design_system/    # Design system templates
-│   ├── generator/        # React/Vite code generation
-│   ├── validator/        # Build and compliance validation
-│   └── feedback/         # Feedback parsing and application
-├── templates/            # Vite/React project templates
-├── design_systems/       # Example design system configs
-├── tests/                # Test suite
-└── requirements.txt      # Python dependencies
+│   ├── cli.py                     # CLI entry point
+│   ├── llm/                       # LLM provider abstractions
+│   │   └── claude.py              # Claude API client
+│   ├── design_system/             # Design system management
+│   │   ├── models.py              # Pydantic models
+│   │   └── loader.py              # Loading utilities
+│   ├── generator/                 # React/Vite code generation
+│   │   ├── parser.py              # Requirements → specs
+│   │   ├── component_generator.py # Component code generation
+│   │   └── scaffold.py            # Project scaffolding
+│   ├── validator/                 # Build and compliance validation
+│   └── feedback/                  # Feedback parsing (TODO)
+├── templates/
+│   └── vite-react/                # Base Vite/React template
+├── design_systems/                # Example design system configs
+│   └── default.json
+├── examples/                      # Example requirements
+│   ├── todo-app.txt
+│   └── contact-form.txt
+├── tests/                         # Test suite
+└── pyproject.toml                 # Python project config
 ```
+
+## Current Implementation Status
+
+**Completed:**
+- ✅ Python project setup with uv
+- ✅ Design system JSON schema and default config
+- ✅ Claude API wrapper with retry logic
+- ✅ Vite/React template with CSS variables
+- ✅ Project scaffolding from templates
+- ✅ Requirements parser (natural language → component specs)
+- ✅ React component generator
+- ✅ CLI with basic generation command
+- ✅ Example requirements files
+
+**TODO (Phase 2):**
+- Interactive feedback mode for iterative refinement
+- TypeScript syntax validation
+- Full build validation (npm install && npm run build)
+- Feedback parsing and code updating
+- CrewAI/LangChain orchestration
+- Additional LLM provider support
