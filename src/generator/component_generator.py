@@ -159,7 +159,56 @@ CRITICAL IMPLEMENTATION RULES:
 - Make interactive elements with proper hover states
 - The CSS should use a class name matching the component: .{spec.name.lower()}
 - Use ONLY CSS variables - NO hardcoded values
-- DO NOT create custom spacing, colors, or border-radius values"""
+- DO NOT create custom spacing, colors, or border-radius values
+
+CRITICAL CSS RULES - MINIMAL CUSTOM CSS:
+Custom CSS should ONLY contain layout properties (flexbox, grid, positioning).
+ALL visual properties MUST use CSS variables from the design system.
+
+✅ ALLOWED in custom CSS:
+- Layout: display, flex-direction, justify-content, align-items, gap, grid, position
+- Structure: width, height, max-width, overflow
+- Using CSS variables for ANY value
+
+❌ FORBIDDEN in custom CSS (use pre-defined classes or CSS variables):
+- border-left: 4px solid ... (NO custom borders - cards already have borders)
+- border-top/right/bottom: ... (NO custom borders)
+- font-size: 14px (use var(--font-size-body-small) or var(--font-size-caption))
+- font-weight: 500 (use var(--font-weight-medium))
+- color: #XXXXXX (use var(--color-*))
+- background: #XXXXXX (use var(--color-*))
+- padding: 10px (use var(--spacing-*))
+- margin: 20px (use var(--spacing-*))
+- border-radius: 8px (use var(--radius-*))
+
+CORRECT CSS EXAMPLE:
+.mycomponent {{
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);  /* ✅ Using CSS variable */
+}}
+
+.mycomponent__header {{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}}
+
+.mycomponent__text {{
+  color: var(--color-bluegrey-700);  /* ✅ Using CSS variable */
+  font-size: var(--font-size-body-small);  /* ✅ Using CSS variable */
+}}
+
+WRONG CSS EXAMPLE:
+.mycomponent {{
+  border-left: 4px solid #E07900;  /* ❌ Custom border */
+  padding: 20px;  /* ❌ Hardcoded spacing */
+}}
+
+.mycomponent__text {{
+  font-size: 14px;  /* ❌ Hardcoded size */
+  color: #5D607E;  /* ❌ Hardcoded color */
+}}"""
 
         response = self.client.generate(prompt=prompt, system=system_prompt, temperature=0.5)
 
