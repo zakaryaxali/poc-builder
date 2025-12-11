@@ -1,0 +1,126 @@
+Goal
+I am intending to create a simple leave planner app that allows me to let my employees add their planned leave dates, auto-detecting conflicts and team coverage gaps. For user interface and experience, please refer to these guidelines (attach or paste design guidelines text)
+
+Key Features
+Employee Management - Add employees with their name, role, and team
+Leave Requests - Submit leave requests with date ranges and types (vacation, sick, personal)
+Conflict Detection - Automatically detects when team members have overlapping leave dates
+Coverage Gap Analysis - Alerts when a team has less than 50% coverage on any given day
+Persistent Storage - All data is saved automatically and persists across sessions
+
+Epic 1: Employee Management
+
+Story 1.1: Add Employee
+
+As a managerI want to add new employees to the systemSo that I can track their leave requests
+Acceptance Criteria:
+User can click "Add Employee" button
+Form appears with fields: Name (text), Role (text), Team (text)
+All fields are required
+Employee appears in the employees list
+Form closes after successful save
+
+Story 1.2: View Employees List
+
+As a managerI want to see all employees in a listSo that I know who is in my organization
+Acceptance Criteria:
+Display all employees in list format
+Show employee name, role, and team for each entry
+Display total count of employees
+Show "No employees added yet" message when list is empty
+
+
+Epic 2: Leave Request Management
+
+Story 2.1: Submit Leave Request
+
+As an employeeI want to submit a leave request with datesSo that my absence is recorded
+Acceptance Criteria:
+User can click "Request Leave" button
+Form appears with fields:
+Employee (dropdown of all employees)
+Leave Type (dropdown: Vacation, Sick Leave, Personal)
+Start Date (date picker)
+End Date (date picker)
+All fields are required
+End date must be same or after start date
+Leave request is saved with status "pending"
+Request appears in leave requests list
+Form closes after successful save
+
+
+Story 2.2: View Leave Requests
+
+As a managerI want to see all leave requestsSo that I can review the team's planned absences
+Acceptance Criteria:
+Display all leave requests in cards/list format
+Show employee name, date range, and leave type for each request
+Display total count of leave requests
+Show "No leave requests yet" message when list is empty
+
+
+Story 2.3: Delete Leave Request
+
+As a managerI want to remove a leave requestSo that I can cancel outdated or incorrect requests
+Acceptance Criteria:
+Each leave request has a delete button
+Clicking delete removes the request immediately
+Request is removed from storage
+List updates to reflect deletion
+
+Epic 3: Conflict Detection
+Story 3.1: Detect Overlapping Leave in Same Team
+
+As a managerI want to see when team members have overlapping leave datesSo that I can avoid scheduling conflicts
+Acceptance Criteria:
+System checks all pending/approved leave requests
+Compare dates of requests from employees in the same team
+Two leave periods overlap if any date appears in both ranges
+Display warning alert showing:
+Names of conflicting employees
+Team name
+That their leave overlaps
+Show count of total conflicts
+Alert appears at top of page with amber/yellow styling
+Alert only shows when conflicts exist
+
+Epic 4: Coverage Gap Analysis
+Story 4.1: Detect Low Team Coverage
+
+As a managerI want to be alerted when a team has too few people availableSo that I can ensure adequate staffing
+Acceptance Criteria:
+System analyzes each team's coverage for each day
+For each day with leave requests:
+Count total team members
+Count how many are on leave
+Calculate availability percentage
+Flag as "coverage gap" if availability is below 50%
+Display warning alert showing:
+Team name
+Date of low coverage
+Number available / total team size
+Coverage percentage
+Show up to 3 most critical gaps, with count of additional gaps
+Sort gaps by date (earliest first)
+Alert appears at top of page with red styling
+Alert only shows when gaps exist
+
+Epic 5: Alerts
+Story 5.1: Display Alert Sections
+
+As a userI want to see important warnings at the topSo that I notice scheduling issues immediately
+Acceptance Criteria:
+Alerts section appears above all other content
+Only display alerts section if conflicts OR gaps exist
+Use amber/yellow for conflicts with warning icon
+Use red for coverage gaps with users icon
+Each alert type has clear heading and icon
+Alerts are visually distinct from main content
+
+Epic 6: Data Persistence
+Story 6.1: Save Data Automatically
+
+As a userI want to have my data saved automaticallySo that I don't lose information when I refresh
+Acceptance Criteria:
+Save employees to storage after any add operation
+Save leave requests to storage after any add/delete operation
