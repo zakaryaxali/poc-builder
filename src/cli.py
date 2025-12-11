@@ -2,6 +2,7 @@
 
 import os
 import subprocess
+import time
 from pathlib import Path
 
 import click
@@ -133,6 +134,9 @@ def generate(
 ) -> None:
     """Generate a React/Vite project from requirements."""
     try:
+        # Start timing
+        start_time = time.time()
+
         # Validate API key
         if not api_key and not os.getenv("ANTHROPIC_API_KEY"):
             console.print(
@@ -165,6 +169,7 @@ def generate(
             progress.update(task, description="Initializing Claude client...")
             client = ClaudeClient(api_key=api_key)
             console.print("[green]✓[/green] Claude client initialized")
+            console.print(f"[green]✓[/green] Using model: {client.model}")
 
             # Parse requirements
             progress.update(task, description="Parsing requirements...")
@@ -226,7 +231,32 @@ def generate(
 
             progress.update(task, description="Complete!", total=1, completed=1)
 
+        # Calculate execution time
+        end_time = time.time()
+        execution_time = end_time - start_time
+
+        # Get token usage
+        token_usage = client.get_token_usage()
+
+        # Display success message
         console.print(f"\n[bold green]✓ Project created and validated successfully![/bold green]")
+
+        # Display metrics
+        console.print(f"\n[bold cyan]📊 Generation Metrics:[/bold cyan]")
+
+        # Format execution time
+        if execution_time < 60:
+            time_str = f"{execution_time:.1f}s"
+        else:
+            minutes = int(execution_time // 60)
+            seconds = execution_time % 60
+            time_str = f"{minutes}m {seconds:.1f}s"
+
+        console.print(f"   ⏱  Execution time: {time_str}")
+        console.print(f"   📥 Input tokens:  {token_usage['input_tokens']:,}")
+        console.print(f"   📤 Output tokens: {token_usage['output_tokens']:,}")
+        console.print(f"   📊 Total tokens:  {token_usage['total_tokens']:,}")
+
         console.print(f"\n[bold]Project location:[/bold] {output_path}")
         console.print(f"\n[bold]To run your app:[/bold]")
         console.print(f"  cd {output_path}")

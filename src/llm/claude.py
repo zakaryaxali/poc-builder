@@ -37,6 +37,10 @@ class ClaudeClient:
         self.timeout = timeout
         self.client = Anthropic(api_key=self.api_key, timeout=timeout)
 
+        # Token usage tracking
+        self.input_tokens = 0
+        self.output_tokens = 0
+
     def generate(
         self,
         prompt: str,
@@ -73,6 +77,11 @@ class ClaudeClient:
                     kwargs["system"] = system
 
                 response = self.client.messages.create(**kwargs)
+
+                # Track token usage
+                if hasattr(response, 'usage'):
+                    self.input_tokens += response.usage.input_tokens
+                    self.output_tokens += response.usage.output_tokens
 
                 # Extract text from response
                 if response.content and len(response.content) > 0:
@@ -143,3 +152,20 @@ class ClaudeClient:
             return json.loads(json_str)
         except json.JSONDecodeError as e:
             raise ValueError(f"Failed to parse JSON response: {e}\nResponse: {response}") from e
+
+    def get_token_usage(self) -> dict[str, int]:
+        """Get total token usage since client initialization or last reset.
+
+        Returns:
+            Dictionary with input_tokens, output_tokens, and total_tokens
+        """
+        return {
+            "input_tokens": self.input_tokens,
+            "output_tokens": self.output_tokens,
+            "total_tokens": self.input_tokens + self.output_tokens,
+        }
+
+    def reset_token_usage(self) -> None:
+        """Reset token usage counters to zero."""
+        self.input_tokens = 0
+        self.output_tokens = 0
