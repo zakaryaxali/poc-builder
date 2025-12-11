@@ -54,11 +54,14 @@ class ProjectScaffolder:
         # Create output directory structure
         output_path.mkdir(parents=True)
         (output_path / "src").mkdir()
+        (output_path / "src" / "components").mkdir()
+        (output_path / "public").mkdir()
 
-        # Prepare template context
+        # Prepare template context with all design system tokens
         context = {
             "project_name": project_name,
             "colors": design_system.colors.model_dump(),
+            "semantic_colors": design_system.semantic_colors.model_dump(),
             "typography": design_system.typography.model_dump(),
             "spacing": design_system.spacing.model_dump(),
             "border_width": design_system.border_width.model_dump(),
@@ -67,20 +70,29 @@ class ProjectScaffolder:
             "animation": design_system.animation.model_dump(),
             "layout": design_system.layout.model_dump(),
             "breakpoints": design_system.breakpoints.model_dump(),
+            "header": design_system.header.model_dump(),
+            "button": design_system.button.model_dump(),
+            "card": design_system.card.model_dump(),
+            "badge": design_system.badge.model_dump(),
+            "input": design_system.input.model_dump(),
         }
 
         # Process template files
         self._process_template_file("package.json.j2", output_path / "package.json", context)
         self._process_template_file("index.html", output_path / "index.html", context)
         self._process_template_file("src/main.tsx.j2", output_path / "src" / "main.tsx", context)
-        self._process_template_file("src/App.tsx.j2", output_path / "src" / "App.tsx", context)
         self._process_template_file("src/index.css.j2", output_path / "src" / "index.css", context)
+        self._process_template_file("src/App.css.j2", output_path / "src" / "App.css", context)
 
-        # Copy non-template files directly
+        # Generate Header component
+        self._process_template_file("src/components/Header.tsx.j2", output_path / "src" / "components" / "Header.tsx", context)
+        self._process_template_file("src/components/Header.css.j2", output_path / "src" / "components" / "Header.css", context)
+
+        # Copy static files
         self._copy_static_file("vite.config.ts", output_path / "vite.config.ts")
         self._copy_static_file("tsconfig.json", output_path / "tsconfig.json")
         self._copy_static_file("tsconfig.node.json", output_path / "tsconfig.node.json")
-        self._copy_static_file("src/App.css", output_path / "src" / "App.css")
+        self._copy_static_file("public/thales-logo.svg", output_path / "public" / "thales-logo.svg")
 
         # Create .gitignore
         gitignore_content = """node_modules

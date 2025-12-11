@@ -53,17 +53,24 @@ class RequirementsParser:
         Raises:
             ValueError: If parsing fails or LLM returns invalid response
         """
-        system_prompt = """You are a React application architect. Parse user requirements into a structured component specification.
+        system_prompt = """You are a React application architect following Quantum Design System principles. Parse user requirements into a structured component specification with proper visual hierarchy.
 
 Analyze the requirements and break them down into React components. For each component, identify:
 - Name (PascalCase, descriptive)
-- Description (what it does)
+- Description (what it does and how it should be visually structured)
 - Props (if any, with TypeScript types)
 - State (what local state it needs, with types)
-- Interactions (user actions like clicks, inputs, form submits)
+- Interactions (user actions like clicks, inputs, form submits, status changes)
 - Child components it uses
 
-Think about:
+Think about VISUAL HIERARCHY:
+- Use card-based layouts for grouping (lists of items, sections, panels)
+- Identify status indicators that need semantic color badges (pending, approved, error, warning)
+- Identify data that should be displayed in lists vs. grids vs. tables
+- Plan for proper spacing between sections
+- Consider alert/notification areas
+
+Think about ARCHITECTURE:
 - Component composition and reusability
 - Proper separation of concerns
 - State management (which component owns which state)

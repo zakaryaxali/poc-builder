@@ -42,6 +42,73 @@ def _run_npm_command(command: str, cwd: Path) -> subprocess.CompletedProcess:
     )
 
 
+def _display_metrics(start_time: float, client: ClaudeClient) -> None:
+    """Display execution metrics (time and token usage).
+
+    Args:
+        start_time: Start time from time.time()
+        client: Claude client with token usage tracking
+    """
+    end_time = time.time()
+    execution_time = end_time - start_time
+    token_usage = client.get_token_usage()
+
+    # Format time
+    minutes = int(execution_time // 60)
+    seconds = int(execution_time % 60)
+    time_str = f"{minutes}m {seconds}s" if minutes > 0 else f"{seconds}s"
+
+    # Format tokens with thousand separators
+    input_tokens = f"{token_usage['input_tokens']:,}"
+    output_tokens = f"{token_usage['output_tokens']:,}"
+    total_tokens = f"{token_usage['total_tokens']:,}"
+
+    console.print(f"\n[bold cyan]📊 Metrics:[/bold cyan] ⏱  {time_str} | 🪙 {total_tokens} tokens ({input_tokens} in / {output_tokens} out)")
+
+
+def _attempt_simple_typescript_fix(project_dir: Path, error_output: str) -> bool:
+    """Attempt to fix simple TypeScript errors automatically.
+
+    Args:
+        project_dir: Project directory
+        error_output: Build error output
+
+    Returns:
+        True if a fix was applied, False otherwise
+    """
+    import re
+
+    # Pattern: TS6133: 'variableName' is declared but its value is never read
+    unused_var_pattern = r"TS6133: '(\w+)' is declared but its value is never read"
+    file_pattern = r"src/components/(\w+\.tsx):(\d+):(\d+)"
+
+    matches = list(re.finditer(unused_var_pattern, error_output))
+    file_matches = list(re.finditer(file_pattern, error_output))
+
+    if matches and file_matches:
+        for match, file_match in zip(matches, file_matches):
+            unused_var = match.group(1)
+            file_name = file_match.group(1)
+            file_path = project_dir / "src" / "components" / file_name
+
+            if file_path.exists():
+                content = file_path.read_text()
+                # Replace the unused variable with underscore prefix
+                # Match common patterns: const [x, setX] or const x =
+                updated_content = re.sub(
+                    rf"\b{unused_var}\b",
+                    f"_{unused_var}",
+                    content,
+                    count=1
+                )
+                if updated_content != content:
+                    file_path.write_text(updated_content)
+                    console.print(f"[green]✓[/green] Auto-fixed: Renamed unused variable '{unused_var}' to '_{unused_var}'")
+                    return True
+
+    return False
+
+
 def _attempt_build_fix(
     client: ClaudeClient, project_dir: Path, error_output: str, design_system: DesignSystem
 ) -> bool:
@@ -50,15 +117,19 @@ def _attempt_build_fix(
     Args:
         client: Claude API client
         project_dir: Project directory
-        error_output: Build error output
+        error_output: Build error output (combined stdout + stderr)
         design_system: Design system being used
 
     Returns:
         True if a fix was attempted, False otherwise
     """
+    # First try simple automated fixes
+    if _attempt_simple_typescript_fix(project_dir, error_output):
+        return True
+
     try:
-        # Extract relevant error information
-        error_summary = error_output[:2000]  # Limit error length
+        # Extract relevant error information (last 2000 chars to get actual errors)
+        error_summary = error_output[-2000:] if len(error_output) > 2000 else error_output
 
         fix_prompt = f"""A TypeScript/React build failed with this error:
 
@@ -195,6 +266,7 @@ def generate(
             if install_result.returncode != 0:
                 console.print("[red]✗[/red] npm install failed")
                 console.print(f"[red]Error:[/red] {install_result.stderr[:500]}")
+                _display_metrics(start_time, client)
                 raise click.Abort()
             console.print(f"[green]✓[/green] Installed dependencies")
 
@@ -215,8 +287,10 @@ def generate(
                 if attempt < max_attempts - 1:
                     # Try to fix build errors using Claude
                     console.print("[yellow]→[/yellow] Analyzing errors and attempting fix...")
+                    # Combine stdout and stderr for complete error context
+                    combined_error = build_result.stdout + "\n" + build_result.stderr
                     fix_applied = _attempt_build_fix(
-                        client, output_path, build_result.stderr, ds
+                        client, output_path, combined_error, ds
                     )
                     if not fix_applied:
                         console.print("[yellow]⚠[/yellow] Could not auto-fix, retrying...")
@@ -225,8 +299,13 @@ def generate(
                 console.print(f"[green]✓[/green] Build successful")
             else:
                 console.print(f"[red]✗[/red] Build failed after {max_attempts} attempts")
-                console.print(f"\n[red]Build error:[/red]")
-                console.print(build_result.stderr[:1000])
+                console.print(f"\n[red]Build errors:[/red]")
+                # Show combined output
+                combined_error = build_result.stdout + "\n" + build_result.stderr
+                console.print(combined_error[-1000:])  # Show last 1000 chars
+
+                # Display metrics before aborting
+                _display_metrics(start_time, client)
                 raise click.Abort()
 
             progress.update(task, description="Complete!", total=1, completed=1)

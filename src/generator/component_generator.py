@@ -29,44 +29,75 @@ class ComponentGenerator:
         Returns:
             Tuple of (tsx_code, css_code)
         """
-        system_prompt = """You are an expert React/TypeScript developer. Generate clean, type-safe React components.
+        system_prompt = """You are an expert React/TypeScript developer following the Quantum Design System. Generate clean, professional, enterprise-ready React components.
 
-Follow these strict rules:
+CRITICAL RULES:
 1. Use functional components with hooks
 2. Use TypeScript with proper type annotations
-3. Use CSS variables from the design system (NEVER hardcode colors, spacing, etc.)
-4. Follow React best practices
-5. Include all interactions specified
-6. Write clean, readable code with good naming
-7. Return ONLY the code, no explanations
+3. ALWAYS use CSS variables - NEVER hardcode any values
+4. Apply proper visual hierarchy with cards, spacing, and typography
+5. Use semantic colors for status indicators and alerts
+6. Include all interactions specified
+7. Return ONLY code blocks, no explanations
 
-Available CSS variables:
+QUANTUM DESIGN SYSTEM - CSS VARIABLES:
 
-Colors:
-- Primary: var(--color-primary), var(--color-primary-hover), var(--color-primary-light), var(--color-primary-dark)
-- Secondary: var(--color-secondary), var(--color-secondary-hover)
-- Neutral: var(--color-background), var(--color-surface), var(--color-border), var(--color-divider)
-- Text: var(--color-text-heading), var(--color-text-body), var(--color-text-muted), var(--color-text-disabled)
-- Semantic: var(--color-success), var(--color-error), var(--color-warning), var(--color-info)
+COLORS - Use bluegrey palette for text and neutrals:
+- Headings: var(--color-bluegrey-900)
+- Body text: var(--color-bluegrey-700)
+- Muted text: var(--color-bluegrey-500)
+- Page background: var(--color-bluegrey-25)
+- Borders: var(--color-bluegrey-200)
 
-Typography:
-- Families: var(--font-family-heading), var(--font-family-body), var(--font-family-mono)
-- Sizes: var(--font-size-h1/h2/h3/h4/h5/h6), var(--font-size-body-large/body/body-small/caption)
-- Weights: var(--font-weight-light/regular/medium/semibold/bold)
-- Line heights: var(--line-height-tight/normal/relaxed)
-- Letter spacing: var(--letter-spacing-tight/normal/wide)
+SEMANTIC COLORS - Use for status/alerts/actions:
+- Primary (buttons, links): var(--color-primary-default), var(--color-primary-hover)
+- Success (positive status): var(--color-success-default), var(--color-success-bg), var(--color-success-text)
+- Warning (caution): var(--color-warning-default), var(--color-warning-bg), var(--color-warning-text)
+- Danger (errors, delete): var(--color-danger-default), var(--color-danger-bg), var(--color-danger-text)
+- Info: var(--color-info-default), var(--color-info-bg), var(--color-info-text)
 
-Spacing: var(--spacing-xs/sm/md/lg/xl/xxl/xxxl)
+COMPONENT PATTERNS - Use these pre-defined styles:
 
-Border widths: var(--border-width-thin/medium/thick)
+Buttons:
+- Primary: className="btn btn-primary"
+- Secondary: className="btn btn-secondary"
+- Danger: className="btn btn-danger"
+- Sizes: Add "btn-sm" or "btn-lg"
 
-Border radius: var(--radius-none/sm/md/lg/xl/full)
+Cards (for sections, lists, groups):
+- Container: className="card"
+- Title: className="card-title"
+- Description: className="card-description"
 
-Shadows: var(--shadow-none/sm/md/lg/xl)
+Badges (for status indicators):
+- Success: className="badge badge-success"
+- Warning: className="badge badge-warning"
+- Danger: className="badge badge-danger"
+- Info: className="badge badge-info"
 
-Animation: var(--duration-fast/normal), var(--easing)
+Inputs:
+- Text input: className="input"
+- Label: className="label"
+- Error state: className="input input-error"
 
-Layout: var(--max-width), var(--section-padding-vertical/horizontal), var(--grid-gap)"""
+LAYOUT GUIDELINES:
+- Use card components for grouping related content
+- Apply var(--spacing-xl) between major sections
+- Apply var(--spacing-lg) between cards in a list
+- Apply var(--spacing-md) between form fields
+- Use var(--card-shadow) for depth/elevation
+
+TYPOGRAPHY:
+- Use proper heading hierarchy (H1 → H2 → H3)
+- Headings are automatically styled (color, weight, size)
+- Use className="text-muted" for secondary text
+- Use className="text-small" for smaller text
+
+OTHER AVAILABLE VARIABLES:
+- Spacing: var(--spacing-xs/sm/md/lg/xl/xxl/xxxl)
+- Border radius: var(--radius-sm/md/lg/xl/full)
+- Shadows: var(--shadow-sm/md/lg/xl)
+- Animation: var(--duration-fast/normal/slow), var(--easing)"""
 
         # Build prompt with component spec
         prompt = f"""Generate a React component with these specifications:
@@ -90,12 +121,15 @@ Generate two code blocks:
 /* Styles here using CSS variables */
 ```
 
-IMPORTANT:
-- Use ONLY CSS variables for all styling (colors, spacing, typography, etc.)
+CRITICAL IMPLEMENTATION RULES:
+- Use card containers (.card) for grouping employee lists, leave requests, etc.
+- Apply semantic color badges for status (pending=warning, approved=success, rejected=danger)
+- Use bluegrey colors for all text (900 for headings, 700 for body, 500 for muted)
+- Apply proper spacing: var(--spacing-xl) between sections, var(--spacing-lg) between cards
+- Use button classes (btn btn-primary, btn btn-secondary, btn btn-danger)
+- Make interactive elements with proper hover states
 - The CSS should use a class name matching the component: .{spec.name.lower()}
-- Implement ALL specified interactions with proper event handlers
-- Use proper TypeScript types for all props, state, and handlers
-- Make the component fully functional and interactive"""
+- Use ONLY CSS variables - NO hardcoded values"""
 
         response = self.client.generate(prompt=prompt, system=system_prompt, temperature=0.5)
 
@@ -141,7 +175,7 @@ IMPORTANT:
         self._update_app_component(src_dir, spec)
 
     def _update_app_component(self, src_dir: Path, spec: ProjectSpec) -> None:
-        """Update App.tsx to import and use the main component.
+        """Update App.tsx to import and use the main component with Header.
 
         Args:
             src_dir: Source directory
@@ -150,12 +184,16 @@ IMPORTANT:
         main_component = spec.main_component
 
         app_code = f"""import './App.css'
+import Header from './components/Header'
 import {main_component} from './components/{main_component}'
 
 function App() {{
   return (
     <div className="app">
-      <{main_component} />
+      <Header />
+      <main className="main-content">
+        <{main_component} />
+      </main>
     </div>
   )
 }}
