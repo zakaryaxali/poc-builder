@@ -1,0 +1,24 @@
+Create a contact form with the following requirements:
+
+1. Form fields:
+   - Name (text input, required)
+   - Email (email input, required with validation)
+   - Subject (text input, required)
+   - Message (textarea, required)
+
+2. A submit button that:
+   - Validates all fields are filled
+   - Shows an error message if validation fails
+   - Shows a success message when the form is submitted
+
+3. Visual feedback:
+   - Highlight invalid fields in red
+   - Show specific error messages under each invalid field
+   - Disable the submit button while submitting
+   - Show a loading state on the button during submission
+
+4. After successful submission:
+   - Clear the form
+   - Show a success message for 3 seconds
+
+The form should feel responsive and provide clear feedback to users.

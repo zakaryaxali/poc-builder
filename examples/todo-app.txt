@@ -1,0 +1,13 @@
+Build a simple todo list application with the following features:
+
+1. A text input field where users can type new todo items
+2. An "Add" button to add the todo to the list
+3. A list that displays all todo items
+4. Each todo item should have:
+   - The todo text
+   - A checkbox to mark it as complete (completed todos should have strikethrough text)
+   - A delete button to remove the todo
+5. A counter showing how many todos are remaining (not completed)
+6. The interface should be clean and easy to use
+
+The app should be interactive - users should be able to add todos, check them off, and delete them.
