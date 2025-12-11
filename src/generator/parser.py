@@ -1,7 +1,5 @@
 """Requirements parser - convert natural language to structured component specs."""
 
-from typing import Any
-
 from pydantic import BaseModel, Field
 
 from src.llm.claude import ClaudeClient
@@ -90,8 +88,13 @@ Return a JSON object with this structure:
       "children": ["ChildComponent1", "ChildComponent2"]
     }}
   ],
-  "main_component": "App"
-}}"""
+  "main_component": "MainComponentName"
+}}
+
+IMPORTANT:
+- "main_component" should be the ROOT component that contains all the others (e.g., "TodoList" for a todo app, "Dashboard" for a dashboard, etc.)
+- This is the component that will be rendered in App.tsx
+- It should NOT be "App" - identify the actual main feature component"""
 
         try:
             response_dict = self.client.generate_structured(prompt=prompt, system=system_prompt)

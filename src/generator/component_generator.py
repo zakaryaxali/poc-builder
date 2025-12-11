@@ -138,8 +138,7 @@ IMPORTANT:
             css_file.write_text(css_code)
 
         # Update App.tsx to use the main component
-        if spec.main_component != "App":
-            self._update_app_component(src_dir, spec)
+        self._update_app_component(src_dir, spec)
 
     def _update_app_component(self, src_dir: Path, spec: ProjectSpec) -> None:
         """Update App.tsx to import and use the main component.
