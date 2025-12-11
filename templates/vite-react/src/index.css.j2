@@ -1,38 +1,60 @@
 :root {
-  /* Primary Colors */
-  --color-primary: {{ colors.primary }};
-  --color-primary-hover: {{ colors.primary_hover }};
-  --color-primary-light: {{ colors.primary_light }};
-  --color-primary-dark: {{ colors.primary_dark }};
+  /* ===== Color Ramps ===== */
+  /* Blue */
+  {% for key, value in colors.items() if key.startswith('blue_') %}--color-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
 
-  /* Secondary Colors */
-  --color-secondary: {{ colors.secondary }};
-  --color-secondary-hover: {{ colors.secondary_hover }};
+  /* Blue Grey */
+  {% for key, value in colors.items() if key.startswith('bluegrey_') %}--color-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
 
-  /* Neutral Colors */
-  --color-background: {{ colors.background }};
-  --color-surface: {{ colors.surface }};
-  --color-border: {{ colors.border }};
-  --color-divider: {{ colors.divider }};
+  /* Red */
+  {% for key, value in colors.items() if key.startswith('red_') %}--color-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
 
-  /* Text Colors */
-  --color-text-heading: {{ colors.text_heading }};
-  --color-text-body: {{ colors.text_body }};
-  --color-text-muted: {{ colors.text_muted }};
-  --color-text-disabled: {{ colors.text_disabled }};
+  /* Orange */
+  {% for key, value in colors.items() if key.startswith('orange_') %}--color-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
 
-  /* Semantic Colors */
-  --color-success: {{ colors.success }};
-  --color-error: {{ colors.error }};
-  --color-warning: {{ colors.warning }};
-  --color-info: {{ colors.info }};
+  /* Green */
+  {% for key, value in colors.items() if key.startswith('green_') %}--color-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
 
+  /* Light Blue */
+  {% for key, value in colors.items() if key.startswith('lightblue_') %}--color-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
+
+  /* Purple */
+  {% for key, value in colors.items() if key.startswith('purple_') %}--color-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
+
+  /* Yellow */
+  {% for key, value in colors.items() if key.startswith('yellow_') %}--color-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
+
+  /* Base Colors */
+  --color-white: {{ colors.white }};
+  --color-black: {{ colors.black }};
+
+  /* Opacity Variations - White */
+  {% for key, value in colors.items() if key.startswith('white_') and key != 'white' %}--color-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
+
+  /* Opacity Variations - Black */
+  {% for key, value in colors.items() if key.startswith('black_') and key != 'black' %}--color-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
+
+  /* ===== Semantic Colors ===== */
+  {% for key, value in semantic_colors.items() %}--color-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
+
+  /* ===== Typography ===== */
   /* Font Families */
   --font-family-heading: {{ typography.font_family_heading }};
   --font-family-body: {{ typography.font_family_body }};
   --font-family-mono: {{ typography.font_family_mono }};
 
-  /* Heading Font Sizes */
+  /* Font Sizes - Headings */
   --font-size-h1: {{ typography.font_size_h1 }};
   --font-size-h2: {{ typography.font_size_h2 }};
   --font-size-h3: {{ typography.font_size_h3 }};
@@ -40,7 +62,7 @@
   --font-size-h5: {{ typography.font_size_h5 }};
   --font-size-h6: {{ typography.font_size_h6 }};
 
-  /* Body Font Sizes */
+  /* Font Sizes - Body */
   --font-size-body-large: {{ typography.font_size_body_large }};
   --font-size-body: {{ typography.font_size_body }};
   --font-size-body-small: {{ typography.font_size_body_small }};
@@ -63,7 +85,7 @@
   --letter-spacing-normal: {{ typography.letter_spacing_normal }};
   --letter-spacing-wide: {{ typography.letter_spacing_wide }};
 
-  /* Spacing Scale */
+  /* ===== Spacing ===== */
   --spacing-xs: {{ spacing.xs }};
   --spacing-sm: {{ spacing.sm }};
   --spacing-md: {{ spacing.md }};
@@ -72,12 +94,11 @@
   --spacing-xxl: {{ spacing.xxl }};
   --spacing-xxxl: {{ spacing.xxxl }};
 
-  /* Border Widths */
+  /* ===== Borders ===== */
   --border-width-thin: {{ border_width.thin }};
   --border-width-medium: {{ border_width.medium }};
   --border-width-thick: {{ border_width.thick }};
 
-  /* Border Radius */
   --radius-none: {{ border_radius.none }};
   --radius-sm: {{ border_radius.sm }};
   --radius-md: {{ border_radius.md }};
@@ -85,31 +106,54 @@
   --radius-xl: {{ border_radius.xl }};
   --radius-full: {{ border_radius.full }};
 
-  /* Shadows */
+  /* ===== Shadows ===== */
   --shadow-none: {{ shadows.none }};
   --shadow-sm: {{ shadows.sm }};
   --shadow-md: {{ shadows.md }};
   --shadow-lg: {{ shadows.lg }};
   --shadow-xl: {{ shadows.xl }};
 
-  /* Animation */
+  /* ===== Animation ===== */
   --duration-fast: {{ animation.duration_fast }};
   --duration-normal: {{ animation.duration_normal }};
+  --duration-slow: {{ animation.duration_slow }};
   --easing: {{ animation.easing }};
 
-  /* Layout */
+  /* ===== Layout ===== */
   --max-width: {{ layout.max_width }};
   --section-padding-vertical: {{ layout.section_padding_vertical }};
   --section-padding-horizontal: {{ layout.section_padding_horizontal }};
   --grid-gap: {{ layout.grid_gap }};
+  --container-padding: {{ layout.container_padding }};
 
-  /* Breakpoints (for use in JS) */
+  /* ===== Breakpoints ===== */
   --breakpoint-sm: {{ breakpoints.sm }};
   --breakpoint-md: {{ breakpoints.md }};
   --breakpoint-lg: {{ breakpoints.lg }};
   --breakpoint-xl: {{ breakpoints.xl }};
+
+  /* ===== Header Tokens ===== */
+  {% for key, value in header.items() %}--header-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
+
+  /* ===== Button Tokens ===== */
+  {% for key, value in button.items() %}--button-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
+
+  /* ===== Card Tokens ===== */
+  {% for key, value in card.items() %}--card-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
+
+  /* ===== Badge Tokens ===== */
+  {% for key, value in badge.items() %}--badge-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
+
+  /* ===== Input Tokens ===== */
+  {% for key, value in input.items() %}--input-{{ key.replace('_', '-') }}: {{ value }};
+  {% endfor %}
 }
 
+/* ===== Base Resets ===== */
 * {
   margin: 0;
   padding: 0;
@@ -120,16 +164,18 @@ body {
   font-family: var(--font-family-body);
   font-size: var(--font-size-body);
   line-height: var(--line-height-normal);
-  color: var(--color-text-body);
-  background-color: var(--color-background);
+  color: var(--color-bluegrey-900);
+  background-color: var(--color-bluegrey-25);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ===== Typography Styles ===== */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-heading);
-  color: var(--color-text-heading);
+  color: var(--color-bluegrey-900);
   line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-md);
 }
 
 h1 {
@@ -139,7 +185,7 @@ h1 {
 
 h2 {
   font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-semibold);
 }
 
 h3 {
@@ -149,7 +195,7 @@ h3 {
 
 h4 {
   font-size: var(--font-size-h4);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-medium);
 }
 
 h5 {
@@ -162,6 +208,215 @@ h6 {
   font-weight: var(--font-weight-medium);
 }
 
+p {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-bluegrey-700);
+}
+
 #root {
   min-height: 100vh;
+}
+
+/* ===== Base Component Styles ===== */
+
+/* Buttons */
+.btn {
+  font-family: var(--font-family-body);
+  font-size: var(--button-font-size-md);
+  font-weight: var(--button-font-weight);
+  padding: var(--button-padding-md);
+  border-radius: var(--button-border-radius);
+  border: none;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--easing);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+}
+
+.btn-primary:hover {
+  background: var(--button-primary-bg-hover);
+}
+
+.btn-secondary {
+  background: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+  border: var(--border-width-thin) solid var(--button-secondary-border);
+}
+
+.btn-secondary:hover {
+  background: var(--button-secondary-bg-hover);
+}
+
+.btn-danger {
+  background: var(--button-danger-bg);
+  color: var(--button-danger-text);
+}
+
+.btn-danger:hover {
+  background: var(--button-danger-bg-hover);
+}
+
+.btn-sm {
+  padding: var(--button-padding-sm);
+  font-size: var(--button-font-size-sm);
+}
+
+.btn-lg {
+  padding: var(--button-padding-lg);
+  font-size: var(--button-font-size-lg);
+}
+
+/* Cards */
+.card {
+  background: var(--card-background);
+  border-radius: var(--card-border-radius);
+  padding: var(--card-padding);
+  box-shadow: var(--card-shadow);
+}
+
+.card-title {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-bluegrey-900);
+  margin-bottom: var(--spacing-sm);
+}
+
+.card-description {
+  font-size: var(--font-size-body);
+  color: var(--color-bluegrey-700);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--badge-padding);
+  border-radius: var(--badge-border-radius);
+  font-size: var(--badge-font-size);
+  font-weight: var(--badge-font-weight);
+  line-height: 1;
+}
+
+.badge-success {
+  background: var(--badge-success-bg);
+  color: var(--badge-success-text);
+}
+
+.badge-warning {
+  background: var(--badge-warning-bg);
+  color: var(--badge-warning-text);
+}
+
+.badge-danger {
+  background: var(--badge-danger-bg);
+  color: var(--badge-danger-text);
+}
+
+.badge-info {
+  background: var(--badge-info-bg);
+  color: var(--badge-info-text);
+}
+
+.badge-neutral {
+  background: var(--badge-neutral-bg);
+  color: var(--badge-neutral-text);
+}
+
+/* Inputs */
+.input {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  padding: var(--input-padding);
+  border-radius: var(--input-border-radius);
+  border: var(--input-border-width) solid var(--input-border-color);
+  background: var(--input-background);
+  color: var(--input-text-color);
+  transition: border-color var(--duration-fast) var(--easing);
+  width: 100%;
+}
+
+.input:hover {
+  border-color: var(--input-border-color-hover);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--input-border-color-focus);
+  box-shadow: 0 0 0 var(--input-focus-ring-width) var(--input-focus-ring-color);
+}
+
+.input:disabled {
+  background: var(--input-background-disabled);
+  color: var(--input-text-color-disabled);
+  cursor: not-allowed;
+}
+
+.input::placeholder {
+  color: var(--input-placeholder-color);
+}
+
+.input-error {
+  border-color: var(--input-border-color-error);
+}
+
+/* Form Labels */
+.label {
+  display: block;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-bluegrey-900);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Utility Classes */
+.text-muted {
+  color: var(--color-bluegrey-500);
+}
+
+.text-small {
+  font-size: var(--font-size-body-small);
+}
+
+.text-caption {
+  font-size: var(--font-size-caption);
+}
+
+.mb-sm {
+  margin-bottom: var(--spacing-sm);
+}
+
+.mb-md {
+  margin-bottom: var(--spacing-md);
+}
+
+.mb-lg {
+  margin-bottom: var(--spacing-lg);
+}
+
+.mb-xl {
+  margin-bottom: var(--spacing-xl);
+}
+
+.mt-sm {
+  margin-top: var(--spacing-sm);
+}
+
+.mt-md {
+  margin-top: var(--spacing-md);
+}
+
+.mt-lg {
+  margin-top: var(--spacing-lg);
+}
+
+.mt-xl {
+  margin-top: var(--spacing-xl);
 }

@@ -1,0 +1,71 @@
+.quantum-header {
+  height: var(--header-height);
+  background: var(--header-background);
+  border-bottom: var(--header-border-bottom-width) solid var(--header-border-bottom-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--header-padding-horizontal);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.quantum-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.quantum-header-menu {
+  background: none;
+  border: none;
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  color: var(--color-bluegrey-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--duration-fast);
+}
+
+.quantum-header-menu:hover {
+  color: var(--color-blue-500);
+}
+
+.quantum-header-logo {
+  height: var(--header-logo-height);
+  width: auto;
+}
+
+.quantum-header-product-name {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-bluegrey-700);
+  margin-left: var(--spacing-sm);
+  padding-left: var(--spacing-md);
+  border-left: 1px solid var(--color-bluegrey-200);
+}
+
+.quantum-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.quantum-header-notification {
+  background: none;
+  border: none;
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  color: var(--color-bluegrey-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--duration-fast);
+  position: relative;
+}
+
+.quantum-header-notification:hover {
+  color: var(--color-blue-500);
+}
