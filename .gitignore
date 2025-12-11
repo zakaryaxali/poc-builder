@@ -208,3 +208,7 @@ __marimo__/
 
 
 .idea/
+# POC Builder specific
+output/
+test-output/
+*-output/
