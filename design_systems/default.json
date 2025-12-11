@@ -1,0 +1,95 @@
+{
+  "name": "Quantum",
+  "colors": {
+    "primary": "#041295",
+    "primary_hover": "#020B59",
+    "primary_light": "#0519CC",
+    "primary_dark": "#030E72",
+    "secondary": "#66D7EB",
+    "secondary_hover": "#0096B1",
+    "background": "#F9FAFB",
+    "surface": "#FFFFFF",
+    "border": "#E5E7EB",
+    "divider": "#E1E1E1",
+    "text_heading": "#333333",
+    "text_body": "#262626",
+    "text_muted": "#555555",
+    "text_disabled": "#BBBCBD",
+    "success": "#126836",
+    "error": "#E01E00",
+    "warning": "#F28200",
+    "info": "#041295"
+  },
+  "typography": {
+    "font_family_heading": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    "font_family_body": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    "font_family_mono": "'Monaco', 'Courier New', monospace",
+    "font_size_h1": "48px",
+    "font_size_h2": "36px",
+    "font_size_h3": "28px",
+    "font_size_h4": "24px",
+    "font_size_h5": "20px",
+    "font_size_h6": "18px",
+    "font_size_body_large": "18px",
+    "font_size_body": "16px",
+    "font_size_body_small": "14px",
+    "font_size_caption": "12px",
+    "font_weight_light": 300,
+    "font_weight_regular": 400,
+    "font_weight_medium": 500,
+    "font_weight_semibold": 600,
+    "font_weight_bold": 700,
+    "line_height_tight": 1.25,
+    "line_height_normal": 1.5,
+    "line_height_relaxed": 1.75,
+    "letter_spacing_tight": "-0.02em",
+    "letter_spacing_normal": "0",
+    "letter_spacing_wide": "0.05em"
+  },
+  "spacing": {
+    "xs": "4px",
+    "sm": "8px",
+    "md": "16px",
+    "lg": "24px",
+    "xl": "32px",
+    "xxl": "48px",
+    "xxxl": "64px"
+  },
+  "border_width": {
+    "thin": "1px",
+    "medium": "2px",
+    "thick": "4px"
+  },
+  "border_radius": {
+    "none": "0px",
+    "sm": "4px",
+    "md": "8px",
+    "lg": "16px",
+    "xl": "24px",
+    "full": "9999px"
+  },
+  "shadows": {
+    "none": "none",
+    "sm": "0 1px 2px rgba(0,0,0,0.05)",
+    "md": "0 4px 6px rgba(0,0,0,0.1)",
+    "lg": "0 10px 15px rgba(0,0,0,0.1)",
+    "xl": "0 20px 25px rgba(0,0,0,0.15)"
+  },
+  "animation": {
+    "duration_fast": "150ms",
+    "duration_normal": "300ms",
+    "easing": "ease"
+  },
+  "layout": {
+    "max_width": "1368px",
+    "section_padding_vertical": "80px",
+    "section_padding_horizontal": "24px",
+    "grid_gap": "24px"
+  },
+  "breakpoints": {
+    "sm": "640px",
+    "md": "768px",
+    "lg": "1024px",
+    "xl": "1280px"
+  }
+}
